@@ -52,10 +52,13 @@
                                         <td v-text="member.installment_months"></td>
                                         <td v-text="member.file_number"></td>
                                         <td v-text="member.form_fee"></td>
+                                        <td>
+                                            <button class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">Delete</button>
+                                        </td>
                                     </tr>
 								</tbody>
 							</table>
-							<nav aria-label="Page navigation example">
+							<nav aria-label="Page navigation example" style="margin-top: 20px;">
 								<ul class="pagination">
 								  <li class="page-item" :class="{ 'active': page.label == current_page }" @click="visitPage(page.url)" v-for="page in member_pages"><a class="page-link" href="#" v-html="page.label"></a></li>
 								</ul>
@@ -131,7 +134,17 @@
 					
 					addToRecovery(id) {
 						window.location = route("member.add.recovery", { member: id });
-					}
+					},
+
+                    async deleteRecovery(id) {
+                        const isConfirm = confirm("Are you sure? you want to delete it?");
+                        if(!isConfirm) return;
+                        const response = await axios.delete(route('api.recovery.destroy', { recovery: id }));
+
+                        if(response.status === 200) {
+                            this.members = this.members.filter(member => member.id != id);
+                        }
+                    }
 				}
 			}).mount("#app");
 		</script>

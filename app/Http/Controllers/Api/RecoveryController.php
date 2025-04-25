@@ -39,4 +39,12 @@ class RecoveryController extends Controller
 
         return [ "status" => 200 ];
     }
+    public function destroy(Recovery $recovery) {
+        if(!$recovery->exists()) {
+            return [ "status" => 404, "This member's recovery is not found in our database" ];
+        }
+        $recovery->delete();
+
+        return [ "status" => 200, "message" => "This member's recovery is deleted!" ];
+    }
 }

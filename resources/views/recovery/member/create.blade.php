@@ -132,7 +132,7 @@
                 async submit() {
                     const response = await axios.post(route("api.recovery.store", this.getData()));
                     if(response.status === 200) {
-                        alert("Data saved");
+                        window.location = route("member.add.recovery");
                     }
                 }
             }

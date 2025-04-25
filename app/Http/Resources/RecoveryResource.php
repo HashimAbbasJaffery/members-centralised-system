@@ -15,6 +15,7 @@ class RecoveryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            "id" => $this->id,
             "name" => $this->member->name,
             "cnic" => $this->member->passport,
             "phone_1" => $this->member->mobile,
