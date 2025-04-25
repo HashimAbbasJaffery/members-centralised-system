@@ -24,7 +24,7 @@
 							</select>
 						</div>
 						<div class="card-body" style="overflow: scroll;">
-							<table class="table table-hover my-0">
+							<table class="table table-hover my-0" style="font-size: 10px;">
 								<thead>
 									<tr>
 										<th>Name</th>
@@ -41,10 +41,6 @@
 									</tr>
 								</thead>
 								<tbody>
-                                    {{-- "membership_number" => $this->membership_number,
-            "installment_months" => $this->installment_months,
-            "file_number" => $this->file_number,
-            "form_fee" => $this->form_fee --}}
                                     <tr v-for="(member, index) in members" :class="{ 'highlighted': member.highlighted == 'highlighted' }">
                                         <td v-text="member.name"></td>
                                         <td v-text="member.cnic"></td>

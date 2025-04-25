@@ -24,7 +24,7 @@
 							</select>
 						</div>
 						<div class="card-body" style="overflow: scroll;">
-							<table class="table table-hover my-0">
+							<table class="table table-hover my-0" style="font-size: 10px;">
 								<thead>
 									<tr>
 										<th>No.</th>
@@ -77,7 +77,7 @@
 										</tr>
 								</tbody>
 							</table>
-							<nav aria-label="Page navigation example">
+							<nav aria-label="Page navigation example" style="margin-top: 20px;">
 								<ul class="pagination">
 								  <li class="page-item" :class="{ 'active': page.label == current_page }" @click="visitPage(page.url)" v-for="page in member_pages"><a class="page-link" href="#" v-html="page.label"></a></li>
 								</ul>
