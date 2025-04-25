@@ -13,13 +13,13 @@
       <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Eligibility Forms</span>
     </a>
             </li>
-            <li class="sidebar-item">
+            <li @class(['active' => request()->routeIs("members.index"), 'sidebar-item'])>
                 <a class="sidebar-link" href="index.html">
       <i class="align-middle" data-feather="file"></i> <span class="align-middle">Introduction Letter</span>
     </a>
             </li>
 
-            <li class="sidebar-item">
+            <li @class(['active' => request()->routeIs("members.add.recovery"), 'sidebar-item'])>
                 <a class="sidebar-link" href="index.html">
       <i class="align-middle" data-feather="rotate-ccw"></i> <span class="align-middle">Recovery</span>
     </a>

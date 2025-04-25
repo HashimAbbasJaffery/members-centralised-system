@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('introletter', function (Blueprint $table) {
             $table->id();
+            $table->string("martial_status");
             $table->timestamps();
         });
     }

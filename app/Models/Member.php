@@ -22,7 +22,7 @@ class Member extends Model
 
         return $query;
     }
-    public function highlight() {
+    public function toggleHighlight() {
         $this->highlighted = $this->highlighted === "highlighted" ? "" : "highlighted";
         $this->save();
     }

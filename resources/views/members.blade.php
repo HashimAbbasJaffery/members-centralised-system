@@ -63,8 +63,14 @@
 													<button @click="deleteMember(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-danger">
 														<i class="fa-solid fa-trash"></i>
 													</button>
-													<button @click="highlight(member.id)" style="font-size: 10px;" class="btn btn-primary">
+													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
 														<i class="fa-solid fa-highlighter"></i>
+													</button>
+													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
+														Add in Introletter
+													</button>
+													<button @click="addToRecovery(member.id)" style="font-size: 10px;" class="btn btn-primary">
+														Add in Recovery
 													</button>
 												</div>
 											</td>
@@ -143,6 +149,10 @@
 								member.highlighted = member.highlighted === "highlighted" ? "" : "highlighted";
 							}
 						});
+					},
+					
+					addToRecovery(id) {
+						window.location = route("member.create.recovery", { member: id });
 					}
 				}
 			}).mount("#app");
