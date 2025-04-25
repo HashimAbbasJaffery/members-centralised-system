@@ -12,7 +12,7 @@
 						<div class="card-header">
 							<h5 class="card-title mb-0">Recovery Members</h5>
 						</div>
-						<div style="margin-top: 20px; margin-right: 20px;">
+                        <div style="margin-top: 20px; margin-right: 20px;">
 							<input type="text" id="search" style="width: 24%; float: right; margin-top: 30px;" class="form-control" v-model="keyword" placeholder="Search">
 							<label for="per_page" style="margin-left: 20px; margin-bottom: 5px;">Per Page</label>
 							<select v-model="perpage" id="per_page" class="form-select" style="width: 13%; margin-left: 20px;" aria-label="Default select example">
@@ -53,7 +53,9 @@
                                         <td v-text="member.file_number"></td>
                                         <td v-text="member.form_fee"></td>
                                         <td>
-                                            <button class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">Delete</button>
+                                            <button class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
 								</tbody>
@@ -91,7 +93,6 @@
                     	this.getRecord(route("api.recovery.index", { keyword: newValue, per_page: this.perpage }));
 					},
 					perpage(newValue) {
-						console.log(newValue);
 						this.getRecord(route("api.recovery.index", { per_page: newValue, keyword: this.keyword }));
 					}
 				},
