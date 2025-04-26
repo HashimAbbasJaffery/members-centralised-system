@@ -2,7 +2,7 @@
     
 	<main class="content" id="app">
 		<div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Add Hashim Abbas in Recovery Members</h1>
+            <h5 class="h5 mb-3">Update Hashim Abbas in Recovery Members</h5>
         </div>
         <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
         <div class="row">
@@ -88,16 +88,16 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    level: "level 1",
+                    level: "{{ $recovery->level }}",
                     alt_phone_number: "",
-                    membership_type: "permanent",
-                    membership_number: "",
-                    installment_months: "",
-                    file_number: "",
-                    form_fee: "",
-                    processing_fee: "",
-                    first_payment: "",
-                    total_installment: "",
+                    membership_type: "{{ $recovery->membership_type }}",
+                    membership_number: "{{ $recovery->membership_number }}",
+                    installment_months: "{{ $recovery->installment_months }}",
+                    file_number: "{{ $recovery->file_number }}",
+                    form_fee: "{{ $recovery->form_fee }}",
+                    processing_fee: "{{ $recovery->processing_fee }}",
+                    first_payment: "{{ $recovery->first_payment }}",
+                    total_installment: "{{ $recovery->total_installment }}",
                     sum: ""
                 }
             },
@@ -116,7 +116,7 @@
             methods: {
                 getData() {
                     return {
-                        id: parseInt(route().params.member),
+                        id: parseInt(route().params.recovery),
                         level: this.level,
                         alt_phone_number: this.alt_phone_number,
                         membership_type: this.membership_type,
@@ -130,7 +130,11 @@
                     }
                 },
                 async submit() {
-                    const response = await axios.post(route("api.recovery.store", this.getData()));
+                    const response = await axios.put(route('api.recovery.update', { recovery: parseInt(route().params.recovery) }), this.getData(), {
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        }
+                                    });
                     if(response.status === 200) {
                         window.location = route("member.add.recovery");
                     }

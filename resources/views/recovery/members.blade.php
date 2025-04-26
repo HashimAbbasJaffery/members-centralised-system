@@ -53,9 +53,14 @@
                                         <td v-text="member.file_number"></td>
                                         <td v-text="member.form_fee"></td>
                                         <td>
-                                            <button class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
+											<div style="display: flex;">
+												<button style="margin-right: 10px; font-size: 10px;" class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">
+													<i class="fa-solid fa-trash"></i>
+												</button>
+												<button class="btn btn-primary" @click="updateRecovery(member.id)" style="font-size: 10px;">
+													<i class="fa-solid fa-pen"></i>
+												</button>
+											</div>
                                         </td>
                                     </tr>
 								</tbody>
@@ -107,6 +112,7 @@
 					async getRecord(url) {
 						const response = await axios.get(url);
 						this.members = response.data.data;
+						console.log(response);
 						this.member_pages = response.data.meta.links;
 						this.current_page = response.data.meta.current_page;
 					},
@@ -136,16 +142,18 @@
 					addToRecovery(id) {
 						window.location = route("member.add.recovery", { member: id });
 					},
-
                     async deleteRecovery(id) {
-                        const isConfirm = confirm("Are you sure? you want to delete it?");
+                        const isConfirm = confirm("This data will be deleted completely... are you sure?");
                         if(!isConfirm) return;
                         const response = await axios.delete(route('api.recovery.destroy', { recovery: id }));
 
                         if(response.status === 200) {
                             this.members = this.members.filter(member => member.id != id);
                         }
-                    }
+                    },
+					updateRecovery(id) {
+						window.location = route("member.update.recovery", { recovery: id });
+					}
 				}
 			}).mount("#app");
 		</script>
