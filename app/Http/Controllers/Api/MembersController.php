@@ -17,17 +17,18 @@ class MembersController extends Controller
     public function index() {
         $keyword = request()->keyword;
         $per_page = request()->per_page ?? 10;
+        
         $members = Member::likeWhereOnAllColumns($keyword)
                             ->whereHas("recovery")
                             ->orderBy("id", "desc")->paginate($per_page)
                             ->onEachSide(1)
                             ->withQueryString();
+        
         return $members->toResourceCollection();
     }
 
     public function destroy(Member $member) {
         $member->delete();
-
         return [ "status" => 200 ];
     }
     public function highlight(Member $member) {
