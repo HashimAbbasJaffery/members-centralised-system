@@ -16,6 +16,7 @@ class MemberResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "recovery_id" => $this->recovery?->id,
             "name" => $this->name,
             "current" => $this->current,
             "gender" => $this->gender,

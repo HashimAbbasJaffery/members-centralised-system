@@ -23,6 +23,9 @@
 								<option value="100">100</option>
 							</select>
 						</div>
+						<div>
+							<button @click="createManually" class="btn btn-primary" style="float: right; width: 10%; margin-right: 20px; margin-top: 10px; font-size: 13px;">Create</button>
+						</div>
 						<div class="card-body" style="overflow: scroll;">
 							<table class="table table-hover my-0" style="font-size: 10px;">
 								<thead>
@@ -112,7 +115,6 @@
 					async getRecord(url) {
 						const response = await axios.get(url);
 						this.members = response.data.data;
-						console.log(response);
 						this.member_pages = response.data.meta.links;
 						this.current_page = response.data.meta.current_page;
 					},
@@ -153,6 +155,9 @@
                     },
 					updateRecovery(id) {
 						window.location = route("member.update.recovery", { recovery: id });
+					},
+					createManually() {
+						alert("Recovery will be created manually");
 					}
 				}
 			}).mount("#app");

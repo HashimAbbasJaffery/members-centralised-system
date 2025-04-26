@@ -152,6 +152,7 @@
 					},
 					
 					addToRecovery(id) {
+						alert(id);
 						window.location = route("member.create.recovery", { member: id });
 					}
 				}

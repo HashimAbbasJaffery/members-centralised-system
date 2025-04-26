@@ -2,7 +2,7 @@
     
 	<main class="content" id="app">
 		<div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Add Hashim Abbas in Recovery Members</h1>
+            <h1 class="h3 mb-3">Add {{ $member_name }} in Recovery Members</h1>
         </div>
         <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
         <div class="row">
@@ -69,8 +69,13 @@
         </div>
         <div>
         <div class="row" style="padding-top: 20px;">
-            <div class="col-3">
-                <button style="margin-top: 25px;" @click="submit" class="btn btn-primary">Submit</button>
+            <div class="col-3" style="display: flex; gap: 8px;">
+                <button style="margin-top: 25px; white-space: nowrap; font-size: 12px;" @click="submit" class="btn btn-primary">
+                    Submit
+                </button>
+                <button style="margin-top: 25px; font-size: 12px; white-space: nowrap;" @click="submit" class="btn btn-dark">
+                    Update Member's basic info
+                </button>
             </div>
             <div class="col-3">&nbsp;</div>
             <div class="col-3">&nbsp;</div>

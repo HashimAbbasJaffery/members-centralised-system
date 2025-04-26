@@ -18,15 +18,6 @@ class RecoveryController extends Controller
     ) {}
     public function index() {
         return $this->service->getRecoveries(request()->keyword, request()->per_page ?? 10);
-        $keyword = request()->keyword;
-        $per_page = request()->per_page ?? 10;
-        $recoveries = Recovery::
-                            likeWhereOnAllColumns($keyword)
-                            ->with("member")
-                            ->orderBy("id", "desc")->paginate($per_page)
-                            ->onEachSide(1)
-                            ->withQueryString();
-        return $recoveries->toResourceCollection();
     }
 
     public function store(RecoveryRequest $request) {
