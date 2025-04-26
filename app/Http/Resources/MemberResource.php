@@ -14,6 +14,20 @@ class MemberResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if($request->type === "member") {
+            return [
+                "id" => $this->id,
+                "recovery_id" => $this->recovery?->id,
+                "name" => $this->name,
+                "gender" => $this->gender,
+                "dob" => $this->dob,
+                "passport" => $this->passport,
+                "adress" => $this->adress,
+                "email" => $this->email,
+                "is_partial_paid" => $this->recovery()->exists()
+            ];
+        }
+
         return [
             "id" => $this->id,
             "recovery_id" => $this->recovery?->id,

@@ -4,13 +4,13 @@
 	<main class="content" id="app">
 		<div class="container-fluid p-0">
 
-			<h1 class="h3 mb-3">Eligibility Form</h1>
+			<h1 class="h3 mb-3">Members</h1>
 
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h5 class="card-title mb-0">Eligibility Forms</h5>
+							<h5 class="card-title mb-0">Members List</h5>
 						</div>
 						<div style="margin-top: 20px; margin-right: 20px;">
 							<input type="text" id="search" style="width: 24%; float: right; margin-top: 30px;" class="form-control" v-model="keyword" placeholder="Search">
@@ -28,36 +28,24 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>Date</th>
 										<th>Name</th>
 										<th>Gender</th>
 										<th>DOB</th>
 										<th>Passport</th>
 										<th>Email</th>
-										<th>Mobile</th>
-										<th>Profession</th>
-										<th>Designation</th>
-										<th>Organization</th>
-										<th>Income</th>
-										<th>Subsidy</th>
+                                        <th>Partial Paid</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 										<tr v-for="(member, index) in members" :class="{ 'highlighted': member.highlighted == 'highlighted' }">
 											<td v-text="index + 1" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.current" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
 											<td v-text="member.name" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
 											<td v-text="member.gender" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
 											<td v-text="member.dob" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
 											<td v-text="member.passport" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
 											<td v-text="member.email" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.mobile" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.position" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.profession" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.organization" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.income" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
-											<td v-text="member.applying" :class="{ 'highlighted': member.highlighted == 'highlighted' }"></td>
+											<td v-html="member.is_partial_paid === true ? 'Yes' : 'No'"></td>
 											<td :class="{ 'highlighted': member.highlighted == 'highlighted' }">
 												<div style="display: flex;">
 													<button @click="deleteMember(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-danger">
@@ -68,12 +56,6 @@
 													</button>
 													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
 														<i class="fa-solid fa-highlighter"></i>
-													</button>
-													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
-														Add in Introletter
-													</button>
-													<button @click="addToRecovery(member.id)" style="font-size: 10px;" class="btn btn-primary">
-														Add in Recovery
 													</button>
 												</div>
 											</td>
@@ -106,15 +88,14 @@
 					}
 				},
 				mounted() {
-					this.getRecord(route("api.members.index"));
+					this.getRecord(route("api.members.index", { type: "member" }));
 				},
 				watch: {
 					keyword(newValue) {
-						this.getRecord(route("api.members.index", { keyword: newValue, per_page: this.perpage }));
+						this.getRecord(route("api.members.index", { keyword: newValue, per_page: this.perpage, type: "member" }));
 					},
 					perpage(newValue) {
-						console.log(newValue);
-						this.getRecord(route("api.members.index", { per_page: newValue, keyword: this.keyword }));
+						this.getRecord(route("api.members.index", { per_page: newValue, keyword: this.keyword, type: "member" }));
 					}
 				},
 				methods: {

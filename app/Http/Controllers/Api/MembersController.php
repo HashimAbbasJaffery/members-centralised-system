@@ -18,6 +18,7 @@ class MembersController extends Controller
         $keyword = request()->keyword;
         $per_page = request()->per_page ?? 10;
         $members = Member::likeWhereOnAllColumns($keyword)
+                            ->whereHas("recovery")
                             ->orderBy("id", "desc")->paginate($per_page)
                             ->onEachSide(1)
                             ->withQueryString();

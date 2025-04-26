@@ -24,6 +24,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://kit.fontawesome.com/3a7e8b6e65.js" crossorigin="anonymous"></script>
 
+
     <style>
         .highlighted {
             background: lightgrey !important;
@@ -233,7 +234,7 @@
 	</div>
 
 	<script src="{{ asset("/src/js/app.js") }}"></script>
-    @stack("scripts")
+	@stack("scripts")
 
 </body>
 
