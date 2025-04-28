@@ -37,6 +37,7 @@ return new class extends Migration
             $table->date("current");
             $table->string("unique_key");
             $table->string("status");
+            $table->foreignId("membership_id")->constrained("memberships")->cascadeOnDelete();
             $table->timestamps();
         });
     }

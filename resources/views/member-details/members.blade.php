@@ -51,11 +51,8 @@
 													<button @click="deleteMember(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-danger">
 														<i class="fa-solid fa-trash"></i>
 													</button>
-													<button @click="deleteMember(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
+													<button @click="updateMember(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
 														<i class="fa-solid fa-edit"></i>
-													</button>
-													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
-														<i class="fa-solid fa-highlighter"></i>
 													</button>
 												</div>
 											</td>
@@ -137,6 +134,10 @@
 					
 					addToRecovery(id) {
 						window.location = route("member.create.recovery", { member: id });
+					},
+
+					updateMember(id) {
+						window.location = route("update.member-details", { member: id });
 					}
 				}
 			}).mount("#app");

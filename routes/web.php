@@ -13,6 +13,8 @@ Route::get('/', function () {
 
 Route::resource("/members", MemberController::class);
 Route::get("/member-details", [MembersBasicDetailsController::class, "get"])->name("api.member-details");
+Route::get("/member-details/{member}/update", [MembersBasicDetailsController::class, "update"])->name("update.member-details");
+
 // Route::get("/member/{member}/add_to_introletter", [IntroletterController::class, "create"]);
 
 Route::get("/recovery", [RecoveryController::class, "index"])->name("member.add.recovery");

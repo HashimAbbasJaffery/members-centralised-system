@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Membership;
 use Illuminate\Database\Eloquent\Model;
 use Schema;
 
 class Member extends Model
 {
+    protected $guarded = ["id", "created_at", "updated_at"];
     public function recovery() {
         return $this->hasOne(Recovery::class);
     }
@@ -25,5 +27,8 @@ class Member extends Model
     public function toggleHighlight() {
         $this->highlighted = $this->highlighted === "highlighted" ? "" : "highlighted";
         $this->save();
+    }
+    public function membership() {
+        return $this->belongsTo(Membership::class);
     }
 }

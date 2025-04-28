@@ -24,7 +24,8 @@ class MemberResource extends JsonResource
                 "passport" => $this->passport,
                 "adress" => $this->adress,
                 "email" => $this->email,
-                "is_partial_paid" => $this->recovery()->exists()
+                "is_partial_paid" => $this->recovery()->exists(),
+                "membership" => $this->membership()->id
             ];
         }
 
