@@ -44,6 +44,7 @@
 									</tr>
 								</thead>
 								<tbody>
+									<pre v-text="members"></pre>
                                     <tr v-for="(member, index) in members" :class="{ 'highlighted': member.highlighted == 'highlighted' }">
                                         <td v-text="member.name"></td>
                                         <td v-text="member.cnic"></td>

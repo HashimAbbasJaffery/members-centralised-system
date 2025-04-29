@@ -6,6 +6,8 @@ use App\ApiResponse;
 use App\Models\Member;
 use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class MembersBasicDetailsController extends Controller
@@ -45,7 +47,7 @@ class MembersBasicDetailsController extends Controller
         }
 
         $member->update($validator->validated());
-        
+
         return $this->apiResponse->success("Data has been updated!");
     }
     public function store() {

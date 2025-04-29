@@ -25,7 +25,8 @@ class RecoveryResource extends JsonResource
             "membership_number" => $this->membership_number,
             "installment_months" => $this->installment_months,
             "file_number" => $this->file_number,
-            "form_fee" => $this->form_fee
+            "form_fee" => $this->form_fee,
+            "membership" => $this->member?->membership?->membership ?? ""
         ];
     }
 }

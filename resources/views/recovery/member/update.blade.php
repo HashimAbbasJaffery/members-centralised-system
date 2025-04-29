@@ -176,6 +176,7 @@
                     if(this.processing_fee) total += parseInt(this.processing_fee);
                     if(this.first_payment) total += parseInt(this.first_payment);
                     if(this.total_installment) total += parseInt(this.total_installment);
+                    if(this.sum) total += parseInt(this.sum);
 
                     return total;
                 }

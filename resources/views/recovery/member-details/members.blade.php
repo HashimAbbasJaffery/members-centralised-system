@@ -151,7 +151,7 @@
 
                         if(response.status === 200) {
                             this.members = this.members.filter(member => member.id != id);
-                        }
+                        }	
                     },
 					updateRecovery(id) {
 						window.location = route("member.update.recovery", { recovery: id });
