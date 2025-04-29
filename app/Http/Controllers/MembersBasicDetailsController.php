@@ -6,6 +6,7 @@ use App\ApiResponse;
 use App\Models\Member;
 use App\Models\Membership;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MembersBasicDetailsController extends Controller
 {
@@ -19,15 +20,32 @@ class MembersBasicDetailsController extends Controller
     }
 
     public function edit(Member $member) {
-        $member->update([
+        $data = [
             "name" => request()->name,
             "email" => request()->email,
             "gender" => request()->gender,
             "dob" => request()->dob,
             "passport" => request()->passport,
             "membership_id" => request()->membership_id  
+        ];
+
+        $validator = Validator::make($data, [
+            "name" => [ "required" ],
+            "email" => [ "required" ],
+            "gender" => [ "required" ],
+            "dob" => [ "required" ],
+            "passport" => [ "required" ],
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $member->update($validator->validated());
+        
         return $this->apiResponse->success("Data has been updated!");
     }
     public function store() {

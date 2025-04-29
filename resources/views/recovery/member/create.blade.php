@@ -6,7 +6,7 @@
         </div>
         <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
         <div class="row">
-            <div class="col-3">
+            <div class="col-6">
                 <label for="level" style="margin-bottom: 5px; margin-top: 10px;">Level</label>
                 <select class="form-select mb-3" v-model="level" id="level">
                     <option selected="">Level</option>
@@ -19,52 +19,45 @@
                     <option value="re-regularized">Re-regularized</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-6">
                 <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Alternate Phone Number</label>
-                <input type="text" class="form-control" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
-            </div>
-            <div class="col-3">
-                <label for="membership_type" style="margin-bottom: 5px; margin-top: 10px;">Membership Type</label>
-                <select class="form-select mb-3" v-model="membership_type" id="membership_type">
-                    <option selected="">Membership Type</option>
-                    <option value="permanent">Permanent</option>
-                    <option value="permanent+">Permanent+</option>
-                    <option value="founder">Founder</option>
-                    <option value="corporate">Corporate</option>
-                    <option value="permanent se">Permanent S.E</option>
-                </select>
-            </div>
-            <div class="col-3">
-                <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Membership Number</label>
-                <input type="text" class="form-control" v-model="membership_number" id="phone_2" placeholder="Membership Number">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['alt_phone_number']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['alt_phone_number']?.[0].length }" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 <label for="installment_month" style="margin-bottom: 5px; margin-top: 10px;">Installment Month</label>
-                <input type="text" class="form-control" v-model="installment_months" id="installment_month" placeholder="Installment Month">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['installment_months']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['installment_months']?.[0].length }" v-model="installment_months" id="installment_month" placeholder="Installment Month">
             </div>
             <div class="col-6">
                 <label for="file_number" style="margin-bottom: 5px; margin-top: 10px;">File Number</label>
-                <input type="text" class="form-control" v-model="file_number" id="file_number" placeholder="Installment Month">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['file_number']?.[0]"></p>
+                <input type="text" class="form-control" v-model="file_number" :class="{ 'border border-danger': errors['file_number']?.[0].length }" id="file_number" placeholder="File Number">
             </div>
         </div>
         <div class="row" style="padding-top: 20px;">
             <div class="col-3">
                 <label for="form_fee" style="margin-bottom: 5px; margin-top: 10px;">Form Fee</label>
-                <input type="text" v-model="form_fee" class="form-control" id="form_fee" placeholder="Form Fee">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['form_fee']?.[0]"></p>
+                <input type="text" v-model="form_fee" class="form-control" :class="{ 'border border-danger': errors['form_fee']?.[0].length }" id="form_fee" placeholder="Form Fee">
             </div>
             <div class="col-3">
                 <label for="processing_fee" style="margin-bottom: 5px; margin-top: 10px;">Processing Fee</label>
-                <input type="text" class="form-control" v-model="processing_fee" id="processing_fee" placeholder="Processing Fee">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['processing_fee']?.[0]"></p>
+                <input type="text" class="form-control" v-model="processing_fee" :class="{ 'border border-danger': errors['processing_fee']?.[0].length }" id="processing_fee" placeholder="Processing Fee">
             </div>
             <div class="col-3">
                 <label for="first_payment" style="margin-bottom: 5px; margin-top: 10px;">First Payment</label>
-                <input type="text" class="form-control" id="first_payment" v-model="first_payment" placeholder="First Payment">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['first_payment']?.[0]"></p>
+                <input type="text" class="form-control" id="first_payment" :class="{ 'border border-danger': errors['first_payment']?.[0].length }" v-model="first_payment" placeholder="First Payment">
             </div>
             <div class="col-3">
                 <label for="total_installment" style="margin-bottom: 5px; margin-top: 10px;">Total Installment</label>
-                <input type="text" class="form-control" id="total_installment" v-model="total_installment" placeholder="Total Installment">
+                
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['total_installment']?.[0]"></p>
+                <input type="text" class="form-control" id="total_installment" :class="{ 'border border-danger': errors['total_installment']?.[0].length }" v-model="total_installment" placeholder="Total Installment">
             </div>
         </div>
         <div>
@@ -100,7 +93,8 @@
                     processing_fee: "",
                     first_payment: "",
                     total_installment: "",
-                    sum: ""
+                    sum: "",
+                    errors: []
                 }
             },
             computed: {
@@ -132,9 +126,15 @@
                     }
                 },
                 async submit() {
-                    const response = await axios.post(route("api.recovery.store", this.getData()));
-                    if(response.status === 200) {
-                        window.location = route("member.add.recovery");
+                    try {
+                        const response = await axios.post(route("api.recovery.store", this.getData()));
+                        if(response.status === 200) {
+                            window.location = route("member.add.recovery");
+                        }
+                    } catch(e) {
+                        if(e.status === 422) {
+                            this.errors = e.response.data.errors;
+                        }
                     }
                 }
             }

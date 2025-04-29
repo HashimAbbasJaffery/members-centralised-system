@@ -22,35 +22,42 @@
             </div>
             <div class="col-6">
                 <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Alternate Phone Number</label>
-                <input type="text" class="form-control" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['alt_phone_number']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['alt_phone_number']?.[0].length }" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 <label for="installment_month" style="margin-bottom: 5px; margin-top: 10px;">Installment Month</label>
-                <input type="text" class="form-control" v-model="installment_months" id="installment_month" placeholder="Installment Month">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['installment_months']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['installment_months']?.[0].length }" v-model="installment_months" id="installment_month" placeholder="Installment Month">
             </div>
             <div class="col-6">
                 <label for="file_number" style="margin-bottom: 5px; margin-top: 10px;">File Number</label>
-                <input type="text" class="form-control" v-model="file_number" id="file_number" placeholder="Installment Month">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['file_number']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['file_number']?.[0].length }" v-model="file_number" id="file_number" placeholder="Installment Month">
             </div>
         </div>
         <div class="row" style="padding-top: 20px;">
             <div class="col-3">
                 <label for="form_fee" style="margin-bottom: 5px; margin-top: 10px;">Form Fee</label>
-                <input type="text" v-model="form_fee" class="form-control" id="form_fee" placeholder="Form Fee">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['form_fee']?.[0]"></p>
+                <input type="text" v-model="form_fee" :class="{ 'border border-danger': errors['form_fee']?.[0].length }" class="form-control" id="form_fee" placeholder="Form Fee">
             </div>
             <div class="col-3">
                 <label for="processing_fee" style="margin-bottom: 5px; margin-top: 10px;">Processing Fee</label>
-                <input type="text" class="form-control" v-model="processing_fee" id="processing_fee" placeholder="Processing Fee">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['processing_fee']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['processing_fee']?.[0].length }" v-model="processing_fee" id="processing_fee" placeholder="Processing Fee">
             </div>
             <div class="col-3">
                 <label for="first_payment" style="margin-bottom: 5px; margin-top: 10px;">First Payment</label>
-                <input type="text" class="form-control" id="first_payment" v-model="first_payment" placeholder="First Payment">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['first_payment']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['first_payment']?.[0].length }" id="first_payment" v-model="first_payment" placeholder="First Payment">
             </div>
             <div class="col-3">
                 <label for="total_installment" style="margin-bottom: 5px; margin-top: 10px;">Total Installment</label>
-                <input type="text" class="form-control" id="total_installment" v-model="total_installment" placeholder="Total Installment">
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['total_installment']?.[0]"></p>
+                <input type="text" class="form-control" :class="{ 'border border-danger': errors['total_installment']?.[0].length }" id="total_installment" v-model="total_installment" placeholder="Total Installment">
             </div>
         </div>
         <div>
@@ -142,6 +149,7 @@
                     first_payment: "{{ $recovery->first_payment }}",
                     total_installment: "{{ $recovery->total_installment }}",
                     sum: "",
+                    errors: [],
 
                     // Basic Member's form member
                     id: "{{ $member->id }}",
@@ -201,18 +209,28 @@
                 },
                 async submit() {
                     this.is_updating_recovery = true;
-                    const response = await axios.put(route('api.recovery.update', { recovery: parseInt(route().params.recovery) }), this.getData(), {
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        }
-                                    });
-                    if(response.status === 200) {
-                        this.toast.success("Recovery Data has been Updated!", {
-                            position: "top-right",
+                    try {
+                        const response = await axios.put(route('api.recovery.update', { recovery: parseInt(route().params.recovery) }), this.getData(), {
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            }
+                                        });
+                        if(response.status === 200) {
+                            this.toast.success("Recovery Data has been Updated!", {
+                                position: "top-right",
+                            });
+    
+                        }
+                    } catch(e) {
+                        if(e.response.status === 422) {
+                            this.errors = e.response.data.errors;
+                        }
+                        this.toast.error("Please fix all errors to proceed", {
+                            position: "top-right"
                         });
-
+                    } finally {
+                        this.is_updating_recovery = false;
                     }
-                    this.is_updating_recovery = false;
                 },
 
                 async submit_basic_member_form(e) {
