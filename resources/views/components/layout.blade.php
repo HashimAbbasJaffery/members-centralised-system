@@ -29,6 +29,10 @@
         .highlighted {
             background: lightgrey !important;
         }
+		
+		button:disabled {
+			cursor: not-allowed;
+		}
     </style>
 
 </head>

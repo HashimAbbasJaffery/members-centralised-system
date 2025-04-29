@@ -15,6 +15,7 @@ Route::name("api.")->group(function() {
     Route::resource("/members", MembersController::class);
     Route::resource("/recovery", RecoveryController::class);
     Route::put("/member-details/{member}/update", [MembersBasicDetailsController::class, "edit"])->name("member-details.update");
+    Route::post("/member-details/create", [MembersBasicDetailsController::class, "store"])->name("member-details.create");
 });
 
 Route::put("/member/{member}/highlighter", [MembersController::class, "highlight"])->name("api.members.highlight");

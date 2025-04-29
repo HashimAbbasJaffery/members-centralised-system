@@ -43,6 +43,7 @@
                 </div>
             </div>
             <button class="btn btn-primary" style="margin-top: 20px;" type="submit">Submit</button>
+                <a href="{{ route('api.member-details') }}" class="btn btn-dark" style="margin-top: 20px; margin-left: 10px;">Cancel</a>
             </div>
         </form>
         </div>

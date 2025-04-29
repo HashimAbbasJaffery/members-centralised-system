@@ -17,9 +17,10 @@ class RecoveryController extends Controller
         return view("recovery.member.create", compact("member_name"));
     }
     public function update(Recovery $recovery) {
-        return view("recovery.member.update", compact("recovery"));
+        $member = $recovery->member()->select(["id", "name", "gender", "dob", "passport", "email", "membership_id"])->first();
+        return view("recovery.member.update", compact("recovery", "member"));
     }
     public function createManually(Member $member) {
-        return view("recovery.member.create");
+        return view("recovery.create-manually");
     }
 }

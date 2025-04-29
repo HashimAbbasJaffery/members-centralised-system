@@ -24,7 +24,7 @@
 							</select>
 						</div>
 						<div>
-							<button @click="createManually" class="btn btn-primary" style="float: right; width: 10%; margin-right: 20px; margin-top: 10px; font-size: 13px;">Create</button>
+							<a href="{{ route('member.create.recovery.manually') }}" class="btn btn-primary" style="float: right; width: 10%; margin-right: 20px; margin-top: 10px; font-size: 13px;">Create</a>
 						</div>
 						<div class="card-body" style="overflow: scroll;">
 							<table class="table table-hover my-0" style="font-size: 10px;">
@@ -57,7 +57,7 @@
                                         <td v-text="member.form_fee"></td>
                                         <td>
 											<div style="display: flex;">
-												<button style="margin-right: 10px; font-size: 10px;" class="btn btn-primary" @click="deleteRecovery(member.id)" style="font-size: 10px;">
+												<button style="margin-right: 10px; font-size: 10px;" class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">
 													<i class="fa-solid fa-trash"></i>
 												</button>
 												<button class="btn btn-primary" @click="updateRecovery(member.id)" style="font-size: 10px;">

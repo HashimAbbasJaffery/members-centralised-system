@@ -1,12 +1,13 @@
 <x-layout>
-    
-	<main class="content" id="app">
+    <link rel="stylesheet" href="https://unpkg.com/vue-toast-notification/dist/theme-sugar.css">
+<script src="https://unpkg.com/vue-toast-notification"></script>
+    <main class="content" id="app">
 		<div class="container-fluid p-0">
             <h5 class="h5 mb-3">Update Hashim Abbas in Recovery Members</h5>
         </div>
         <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
         <div class="row">
-            <div class="col-3">
+            <div class="col-6">
                 <label for="level" style="margin-bottom: 5px; margin-top: 10px;">Level</label>
                 <select class="form-select mb-3" v-model="level" id="level">
                     <option selected="">Level</option>
@@ -19,24 +20,9 @@
                     <option value="re-regularized">Re-regularized</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-6">
                 <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Alternate Phone Number</label>
                 <input type="text" class="form-control" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
-            </div>
-            <div class="col-3">
-                <label for="membership_type" style="margin-bottom: 5px; margin-top: 10px;">Membership Type</label>
-                <select class="form-select mb-3" v-model="membership_type" id="membership_type">
-                    <option selected="">Membership Type</option>
-                    <option value="permanent">Permanent</option>
-                    <option value="permanent+">Permanent+</option>
-                    <option value="founder">Founder</option>
-                    <option value="corporate">Corporate</option>
-                    <option value="permanent se">Permanent S.E</option>
-                </select>
-            </div>
-            <div class="col-3">
-                <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Membership Number</label>
-                <input type="text" class="form-control" v-model="membership_number" id="phone_2" placeholder="Membership Number">
             </div>
         </div>
         <div class="row">
@@ -70,7 +56,8 @@
         <div>
         <div class="row" style="padding-top: 20px;">
             <div class="col-3">
-                <button style="margin-top: 25px;" @click="submit" class="btn btn-primary">Submit</button>
+                <button :disabled="is_updating_recovery" style="margin-top: 25px;" @click="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('member.add.recovery') }}" style="margin-top: 25px; margin-left: 10px;" class="btn btn-dark">Cancel</a>
             </div>
             <div class="col-3">&nbsp;</div>
             <div class="col-3">&nbsp;</div>
@@ -81,6 +68,61 @@
         </div>
     </div>
     </div>
+    <h5 class="h5 mb-3" style="margin-top: 10px;">{{ $member->name }}'s Basic Details</h5>
+    <form id="form" @submit="submit_basic_member_form($event)">
+        <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
+          
+          <!-- Row 1 -->
+          <div class="row">
+            <div class="col-4">
+              <label for="name" style="margin-bottom: 5px; margin-top: 10px;">Name</label>
+              <input type="text" class="form-control" v-model="name" id="name" placeholder="Name">
+            </div>
+            <div class="col-4">
+              <label for="gender" style="margin-bottom: 5px; margin-top: 10px;">Gender</label>
+              <select class="form-select mb-3" v-model="gender" id="gender">
+                <option selected="">Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="col-4">
+              <label for="dob" style="margin-bottom: 5px; margin-top: 10px;">Date of Birth</label>
+              <input type="date" v-model="dob" class="form-control" id="dob" placeholder="dob">
+            </div>
+          </div>
+      
+          <!-- Row 2 -->
+          <div class="row">
+            <div class="col-4">
+              <label for="passport" style="margin-bottom: 5px; margin-top: 10px;">Passport</label>
+              <input type="text" class="form-control" v-model="passport" id="passport" placeholder="Passport">
+            </div>
+            <div class="col-4">
+              <label for="email" style="margin-bottom: 5px; margin-top: 10px;">Email</label>
+              <input type="email" class="form-control" v-model="email" id="email" placeholder="Email">
+            </div>
+            <div class="col-4">
+              <label for="membership" style="margin-bottom: 5px; margin-top: 10px;">Membership</label>
+              <select class="form-select mb-3" v-model="membership" id="membership">
+                <option selected="">Membership</option>
+                <option value="1">Permanent</option>
+                <option value="2">Permanent+</option>
+                <option value="3">Permanent SE</option>
+                <option value="4">Founder</option>
+                <option value="5">Corporate</option>
+              </select>
+            </div>
+          </div>
+      
+          <!-- Buttons -->
+          <div class="mt-3">
+            <button type="submit" :disabled="is_updating_member" class="btn btn-primary" v-text="is_updating_member ? 'Updating...' : 'Update'"></button>
+          </div>
+      
+        </div>
+      </form>
+      
     </main>
     @push("scripts")
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -88,6 +130,7 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    // Recovery Form member
                     level: "{{ $recovery->level }}",
                     alt_phone_number: "",
                     membership_type: "{{ $recovery->membership_type }}",
@@ -98,7 +141,23 @@
                     processing_fee: "{{ $recovery->processing_fee }}",
                     first_payment: "{{ $recovery->first_payment }}",
                     total_installment: "{{ $recovery->total_installment }}",
-                    sum: ""
+                    sum: "",
+
+                    // Basic Member's form member
+                    id: "{{ $member->id }}",
+                    name: "{{ $member->name }}",
+                    gender: "{{ $member->gender }}",
+                    dob: "{{ $member->dob }}",
+                    passport: "{{ $member->passport }}",
+                    email: "{{ $member->email }}",
+                    membership: "{{ $member->membership_id }}",
+
+                    // Toast Notification
+                    toast: VueToast.useToast(),
+
+                    // Spinner flags
+                    is_updating_member: false,
+                    is_updating_recovery: false
                 }
             },
             computed: {
@@ -129,18 +188,49 @@
                         total_installment: this.total_installment,
                     }
                 },
+                getMemberData() {
+                    return {
+                        id: this.id,
+                        name: this.name,
+                        gender: this.gender,
+                        dob: this.dob,
+                        passport: this.passport,
+                        email: this.email,
+                        membership_id: this.membership
+                    }
+                },
                 async submit() {
+                    this.is_updating_recovery = true;
                     const response = await axios.put(route('api.recovery.update', { recovery: parseInt(route().params.recovery) }), this.getData(), {
                                         headers: {
                                             'Content-Type': 'application/json',
                                         }
                                     });
                     if(response.status === 200) {
-                        window.location = route("member.add.recovery");
+                        this.toast.success("Recovery Data has been Updated!", {
+                            position: "top-right",
+                        });
+
                     }
+                    this.is_updating_recovery = false;
+                },
+
+                async submit_basic_member_form(e) {
+                    e.preventDefault();
+                    this.is_updating_member = true;
+                    const response = await axios.put(route("api.member-details.update", { member: parseInt(this.id), ...this.getMemberData() }));
+                    console.log(response);
+                    if(response.status === 200) {
+                        this.toast.success("Member's basic details has been updated!", {
+                            position: "top-right",
+                        });
+                    }
+                    this.is_updating_member = false;
                 }
             }
-        }).mount("#app")
+        });
+
+        app.use(VueToast).mount("#app");
     </script>
     @endpush
 </x-layout>

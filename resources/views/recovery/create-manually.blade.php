@@ -2,11 +2,68 @@
     
 	<main class="content" id="app">
 		<div class="container-fluid p-0">
-            <h1 class="h3 mb-3">Add {{ $member_name }} in Recovery Members</h1>
+            <h1 class="h3 mb-3" v-text="step === 1 ? 'Add Member\'s detail' : 'Register in Recovery'">Recovery</h1>
         </div>
-        <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
+        <form id="form" method="" v-if="step === 1">
+            <div class="rows" style="background: white !important; padding: 20px; border-radius: 5px;">
+              
+              <!-- Row 1 -->
+              <div class="row">
+                <div class="col-4">
+                  <label for="name" style="margin-bottom: 5px; margin-top: 10px;">Name</label>
+                  <input type="text" v-model="name" class="form-control" id="name" placeholder="Name">
+                </div>
+                <div class="col-4">
+                  <label for="gender" style="margin-bottom: 5px; margin-top: 10px;">Gender</label>
+                  <select class="form-select mb-3" v-model="gender" id="gender">
+                    <option selected="">Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <label for="dob" style="margin-bottom: 5px; margin-top: 10px;">Date of Birth</label>
+                  <input type="date" class="form-control" v-model="dob" id="dob" placeholder="dob">
+                </div>
+              </div>
+          
+              <!-- Row 2 -->
+              <div class="row">
+                <div class="col-4">
+                  <label for="passport" style="margin-bottom: 5px; margin-top: 10px;">Passport</label>
+                  <input type="text" class="form-control" id="passport" v-model="passport" placeholder="Passport">
+                </div>
+                <div class="col-4">
+                  <label for="email" style="margin-bottom: 5px; margin-top: 10px;">Email</label>
+                  <input type="email" class="form-control" id="email" v-model="email" placeholder="Email">
+                </div>
+                <div class="col-4">
+                  <label for="membership" style="margin-bottom: 5px; margin-top: 10px;">Membership</label>
+                  <select class="form-select mb-3" id="membership" v-model="membership">
+                    <option selected="">Membership</option>
+                    <option value="1">Permanent</option>
+                    <option value="2">Permanent+</option>
+                    <option value="3">Permanent SE</option>
+                    <option value="4">Founder</option>
+                    <option value="5">Corporate</option>
+                  </select>
+                </div>
+              </div>
+          
+              <!-- Buttons -->
+            <div class="row">
+                <div class="mt-3 cols-3">
+                    <button type="submit" @click="step++" class="btn btn-primary">Next</button>
+                    <a href="http://127.0.0.1:8000/member-details" class="btn btn-dark ms-2">Cancel</a>
+                </div>
+            </div>
+          
+            </div>
+          </form>
+          
+        <div class="rows" v-if="step === 2" style="background: white !important; padding: 20px; border-radius: 5px;">
         <div class="row">
-            <div class="col-3">
+            <div class="col-6">
                 <label for="level" style="margin-bottom: 5px; margin-top: 10px;">Level</label>
                 <select class="form-select mb-3" v-model="level" id="level">
                     <option selected="">Level</option>
@@ -19,24 +76,9 @@
                     <option value="re-regularized">Re-regularized</option>
                 </select>
             </div>
-            <div class="col-3">
+            <div class="col-6">
                 <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Alternate Phone Number</label>
                 <input type="text" class="form-control" v-model="alt_phone_number" id="phone_2" placeholder="Phone Number">
-            </div>
-            <div class="col-3">
-                <label for="membership_type" style="margin-bottom: 5px; margin-top: 10px;">Membership Type</label>
-                <select class="form-select mb-3" v-model="membership_type" id="membership_type">
-                    <option selected="">Membership Type</option>
-                    <option value="permanent">Permanent</option>
-                    <option value="permanent+">Permanent+</option>
-                    <option value="founder">Founder</option>
-                    <option value="corporate">Corporate</option>
-                    <option value="permanent se">Permanent S.E</option>
-                </select>
-            </div>
-            <div class="col-3">
-                <label for="phone_2" style="margin-bottom: 5px; margin-top: 10px;">Membership Number</label>
-                <input type="text" class="form-control" v-model="membership_number" id="phone_2" placeholder="Membership Number">
             </div>
         </div>
         <div class="row">
@@ -69,9 +111,12 @@
         </div>
         <div>
         <div class="row" style="padding-top: 20px;">
-            <div class="col-3" style="display: flex; gap: 8px;">
+            <div class="col-3">
                 <button style="margin-top: 25px; white-space: nowrap; font-size: 12px;" @click="submit" class="btn btn-primary">
                     Submit
+                </button>
+                <button style="margin-top: 25px; white-space: nowrap; font-size: 12px; margin-left: 10px;" @click="step--" class="btn btn-dark">
+                    Back
                 </button>
             </div>
             <div class="col-3">&nbsp;</div>
@@ -90,6 +135,7 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    // Recovery Input Fields
                     level: "level 1",
                     alt_phone_number: "",
                     membership_type: "permanent",
@@ -100,7 +146,18 @@
                     processing_fee: "",
                     first_payment: "",
                     total_installment: "",
-                    sum: ""
+                    sum: "",
+
+                    // Member's basic details input field
+                    name: "",
+                    gender: "",
+                    dob: "",
+                    passport: "",
+                    email: "",
+                    membership_id: "",
+
+                    // Steps in form
+                    step: 1
                 }
             },
             computed: {
@@ -118,7 +175,6 @@
             methods: {
                 getData() {
                     return {
-                        id: parseInt(route().params.member),
                         level: this.level,
                         alt_phone_number: this.alt_phone_number,
                         membership_type: this.membership_type,
@@ -131,8 +187,30 @@
                         total_installment: this.total_installment,
                     }
                 },
+                getMembersData() {
+
+                    return {
+                        name: this.name,
+                        gender: this.gender,
+                        dob: this.dob,
+                        passport: this.passport,
+                        email: this.email
+                    }
+
+                },
                 async submit() {
-                    const response = await axios.post(route("api.recovery.store", this.getData()));
+                    let member_id = "";
+
+                    // Creating Member
+                    const member_response = await axios.post(route('api.member-details.create', this.getMembersData()));
+                    if(member_response.status === 200) {
+                        member_id = member_response.data.data.id;
+                    }
+
+                    if(member_response.status !== 200 || !member_id) return;
+
+                    const response = await axios.post(route("api.recovery.store", { ...this.getData(), id: member_id }));
+
                     if(response.status === 200) {
                         window.location = route("member.add.recovery");
                     }

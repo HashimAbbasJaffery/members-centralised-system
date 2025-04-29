@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Membership;
+use App\Models\Membership;
 use Illuminate\Database\Eloquent\Model;
 use Schema;
 
@@ -23,6 +23,12 @@ class Member extends Model
             }
         });
 
+        return $query;
+    }
+    public function scopeFilter($query, array $filters) {
+        if($filters["type"] === "member") {
+            $query->whereHas($filters["whereHasTable"]);
+        }
         return $query;
     }
     public function toggleHighlight() {

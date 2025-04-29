@@ -24,8 +24,6 @@ class RecoveryRequest extends FormRequest
         return [
             "alt_phone_number" => ["required"],
             "level" => [ "required" ],
-            "membership_type" => [ "required" ],
-            "membership_number" => [ "required" ],
             "installment_months" => [ "required", "numeric" ],
             "file_number" => [ "required" ],
             "form_fee" => [ "required" ],

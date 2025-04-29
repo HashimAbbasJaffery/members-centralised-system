@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId("member_id")->constrained()->cascadeOnDelete();
             $table->string("alt_phone_number");
             $table->string("level");
-            $table->string("membership_type");
-            $table->string("membership_number");
             $table->string("installment_months");
             $table->string("file_number");
             $table->string("form_fee");

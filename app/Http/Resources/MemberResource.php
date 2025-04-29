@@ -46,7 +46,8 @@ class MemberResource extends JsonResource
             "organization" => $this->organization,
             "income" => $this->income,
             "applying" => $this->applying,
-            "highlighted" => $this->highlighted
+            "highlighted" => $this->highlighted,
+            "membership" => $this->membership
         ];
     }
 }

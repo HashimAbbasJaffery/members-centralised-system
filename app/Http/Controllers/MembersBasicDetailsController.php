@@ -30,4 +30,29 @@ class MembersBasicDetailsController extends Controller
 
         return $this->apiResponse->success("Data has been updated!");
     }
+    public function store() {
+        $member = Member::create([
+            "name" => request()->name,
+            "email" => request()->email,
+            "gender" => request()->gender,
+            "dob" => request()->dob,
+            "passport" => request()->passport,
+            "membership_id" => request()->membership_id,
+            "cnic" => "",
+            "adress" => "",
+            "city" => "",
+            "mobile" => "",
+            "profession" => "",
+            "position" => "",
+            "organization" => "",
+            "income" => "",
+            "seeking" => "",
+            "current" => now(),
+            "unique_key" => "",
+            "status" => "",
+            "highlighted" => ""
+        ]);
+
+        return $this->apiResponse->success("Member has been created", [ "id" => $member->id ]);
+    }
 }

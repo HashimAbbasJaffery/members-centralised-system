@@ -25,7 +25,6 @@ class RecoveryController extends Controller
         return $this->apiResponse->success("Data has been created!");
     }
     public function update(RecoveryRequest $request, Recovery $recovery) {
-
         $this->service->recoveryExists($recovery);
 
         $this->service->updateRecovery($recovery, $request->validated());

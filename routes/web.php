@@ -19,6 +19,6 @@ Route::get("/member-details/{member}/update", [MembersBasicDetailsController::cl
 
 Route::get("/recovery", [RecoveryController::class, "index"])->name("member.add.recovery");
 Route::get("/recovery/{member}/create", [RecoveryController::class, "create"])->name("member.create.recovery");
-Route::get("/recovery/{member}/createManually", [RecoveryController::class, "createManually"])->name("member.create.recovery.manually");
+Route::get("/recovery/createManually", [RecoveryController::class, "createManually"])->name("member.create.recovery.manually");
 Route::get("/recovery/{recovery}/update", [RecoveryController::class, "update"])->name("member.update.recovery");
 
