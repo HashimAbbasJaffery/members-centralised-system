@@ -17,9 +17,10 @@ class MembersController extends Controller
     public function index() {
         $keyword = request()->keyword;
         $per_page = request()->per_page ?? 10;
+        $relationships = [ "recovery", "introletter" ];
         
         $members = Member::likeWhereOnAllColumns($keyword)
-                            ->filter([ "type" => request()->type, "whereHasTable" => "recovery" ])
+                            ->filter([ "type" => request()->type, "whereHasTable" => $relationships ])
                             ->orderBy("id", "desc")
                             ->paginate($per_page)
                             ->onEachSide(1)

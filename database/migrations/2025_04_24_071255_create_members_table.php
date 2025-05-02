@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string("unique_key");
             $table->string("status");
             $table->foreignId("membership_id")->constrained("memberships")->cascadeOnDelete();
+            $table->string("membership_number")->nullable();
             $table->timestamps();
         });
     }

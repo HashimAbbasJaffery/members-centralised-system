@@ -18,10 +18,10 @@
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Eligibility Forms</span>
                 </a>
             </li>
-            <li>
-                <a class="sidebar-link" href="index.html">
-      <i class="align-middle" data-feather="file"></i> <span class="align-middle">Introduction Letter</span>
-    </a>
+            <li @class(['active' => request()->routeIs("introletter.index"), 'sidebar-item'])>
+                <a class="sidebar-link" href="{{ route("introletter.index") }}">
+                    <i class="align-middle" data-feather="file"></i> <span class="align-middle">Introduction Letter</span>
+                </a>
             </li>
 
             <li @class(['active' => request()->routeIs("member.add.recovery"), 'sidebar-item'])>

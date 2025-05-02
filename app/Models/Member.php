@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Membership;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Schema;
 
 class Member extends Model
@@ -13,7 +14,9 @@ class Member extends Model
     public function recovery() {
         return $this->hasOne(Recovery::class);
     }
-
+    public function introletter() {
+        return $this->hasOne(Introletter::class);
+    }
     public function scopeLikeWhereOnAllColumns($query, $keyword) {
         $columns = Schema::getColumnListing('members');
 
@@ -26,9 +29,21 @@ class Member extends Model
         return $query;
     }
     public function scopeFilter($query, array $filters) {
-        if($filters["type"] === "member") {
-            $query->whereHas($filters["whereHasTable"]);
-        }
+
+        // Looping through the relationships array and binding it with whereHas
+        $query->where(function() use ($query, $filters) {
+            if($filters["type"] === "member") {
+                $query->where(function() use ($query, $filters) {
+                    foreach($filters["whereHasTable"] as $index => $relationship) {
+                        if($index === 0) {
+                            $query->whereHas($relationship);
+                        } else {
+                            $query->orWhereHas($relationship);
+                        }
+                    }
+                });
+            }
+        });
         return $query;
     }
     public function toggleHighlight() {
@@ -37,5 +52,11 @@ class Member extends Model
     }
     public function membership() {
         return $this->belongsTo(Membership::class);
+    }
+    public function spouses() {
+        return $this->hasMany(Spouse::class);
+    }
+    public function children() {
+        return $this->hasMany(Child::class);
     }
 }

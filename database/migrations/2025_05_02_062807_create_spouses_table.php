@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('introletter', function (Blueprint $table) {
+        Schema::create('spouses', function (Blueprint $table) {
             $table->id();
+            $table->string("spouse_name");
             $table->foreignId("member_id")->constrained("members")->cascadeOnDelete();
-            $table->string("file_number");
-            $table->string("date_of_applying");
-            $table->string("martial_status");
-            $table->string("city_country");
-            $table->string("membership_status");
-            $table->string("country_code")->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('introletter');
+        Schema::dropIfExists('spouses');
     }
 };
