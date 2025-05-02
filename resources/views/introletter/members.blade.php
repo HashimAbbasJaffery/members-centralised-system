@@ -148,7 +148,7 @@
                         }
                     },
 					updateRecovery(id) {
-						window.location = route("member.update.recovery", { recovery: id });
+						window.location = route("member.introletter.update", { introletter: id });
 					},
 					createManually() {
 						alert("Recovery will be created manually");

@@ -9,6 +9,7 @@ class Introletter extends Model
 {
     protected $table = "introletter";
     protected $guarded = [ "id", "created_at", "updated_at" ];
+    protected $with = ["member"];
 
     public function member() {
         return $this->belongsTo(Member::class);

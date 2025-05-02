@@ -17,4 +17,7 @@ class IntroletterController extends Controller
     public function store() {
 
     }
+    public function update(Introletter $introletter) {
+        return view("introletter.update", compact("introletter"));
+    }
 }

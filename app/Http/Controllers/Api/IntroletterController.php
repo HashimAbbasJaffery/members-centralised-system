@@ -27,6 +27,42 @@ class IntroletterController extends Controller
         
         return $introletters->toResourceCollection();
     }
+    public function update(Introletter $introletter) {
+        $spouses = request()->spouses;
+        $children = request()->children;
+
+        DB::transaction(function() use ($spouses, $children, $introletter) {
+            $introletter->update([
+                    "file_number" => request()->file_number,
+                    "date_of_applying" => request()->date_of_applying,
+                    "martial_status" => request()->marital_status,
+                    "city_country" => request()->city_country,
+                    "membership_status" => request()->membership_status
+            ]);
+    
+            Spouse::where("member_id", $introletter->member_id)->delete();
+            // Adding Spouses
+            foreach($spouses as $spouse) {
+                Spouse::create([
+                    "spouse_name" => $spouse,
+                    "member_id" => $introletter->member_id
+                ]);
+            }
+    
+            Child::where("member_id", $introletter->member_id)->delete();
+            // Adding children
+            foreach($children as $child) {
+                Child::create([
+                    "child_name" => $child[0],
+                    "date_of_birth" => $child[1],
+                    "member_id" => $introletter->member_id
+                ]);
+            }
+
+        });
+
+        return $this->apiResponse->success("Introletter Created successfully!");
+    }
     public function store() {
         $spouses = request()->spouses;
         $children = request()->children;
@@ -67,8 +103,11 @@ class IntroletterController extends Controller
         if(!$introletter->exists()) {
             throw new ModelNotFoundException("Model Not Found");
         }
-        
+
         $introletter->delete();
         $this->apiResponse->success("Data has been deleted");
+    }
+    public function show() {
+
     }
 }

@@ -10,7 +10,7 @@ use Schema;
 class Member extends Model
 {
     protected $guarded = ["id", "created_at", "updated_at"];
-    protected $with = [ "membership" ];
+    protected $with = [ "membership", "spouses", "children" ];
     public function recovery() {
         return $this->hasOne(Recovery::class);
     }

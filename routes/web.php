@@ -23,6 +23,7 @@ Route::get("/recovery/createManually", [RecoveryController::class, "createManual
 Route::get("/recovery/{recovery}/update", [RecoveryController::class, "update"])->name("member.update.recovery");
 
 Route::get("/introletter/{member}/create", [IntroletterController::class, "create"])->name("introletter.create");
+Route::get("/introletter/{introletter}/update", [IntroletterController::class, "update"])->name("member.introletter.update");
 Route::get("/introletter", [IntroletterController::class, "index"])->name("introletter.index");
 
 // Route::resource("/introletter", IntroletterController::class);
