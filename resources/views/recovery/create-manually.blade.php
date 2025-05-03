@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-4">
                   <label for="membership" style="margin-bottom: 5px; margin-top: 10px;">Membership</label>
-                  <select class="form-select mb-3" id="membership" v-model="membership">
+                  <select class="form-select mb-3" id="membership" v-model="membership_id">
                     <option selected="">Membership</option>
                     <option value="1">Permanent</option>
                     <option value="2">Permanent+</option>
@@ -47,6 +47,25 @@
                     <option value="4">Founder</option>
                     <option value="5">Corporate</option>
                   </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                    <label for="city" style="margin-bottom: 5px; margin-top: 10px;">City</label>
+                    <input type="text" class="form-control" id="city" v-model="city" placeholder="Country/City">
+                </div>
+                <div class="col-3">
+                    <label for="address" style="margin-bottom: 5px; margin-top: 10px;">Address</label>
+                    <input type="text" class="form-control" id="address" v-model="address" placeholder="Address">
+                </div>
+                <div class="col-3">
+                    <label for="mobile" style="margin-bottom: 5px; margin-top: 10px;">Mobile</label>
+                    <input type="text" class="form-control" id="mobile" v-model="mobile" placeholder="Mobile">
+                </div>
+                <div class="col-3">
+                    <label for="membership_number" style="margin-bottom: 5px; margin-top: 10px;">Membership Number</label>
+                    <input type="text" class="form-control" id="membership_number" v-model="membership_number" placeholder="Membership Number">
                 </div>
               </div>
           
@@ -138,7 +157,7 @@
                     // Recovery Input Fields
                     level: "level 1",
                     alt_phone_number: "",
-                    membership_type: "permanent",
+                    membership: "1",
                     membership_number: "",
                     installment_months: "",
                     file_number: "",
@@ -154,7 +173,10 @@
                     dob: "",
                     passport: "",
                     email: "",
-                    membership_id: "",
+                    membership_id: "1",
+                    city: "",
+                    address: "",
+                    mobile: "",
 
                     // Steps in form
                     step: 1
@@ -177,7 +199,7 @@
                     return {
                         level: this.level,
                         alt_phone_number: this.alt_phone_number,
-                        membership_type: this.membership_type,
+                        membership_id: this.membership_id,
                         membership_number: this.membership_number,
                         installment_months: this.installment_months,
                         file_number: this.file_number,
@@ -194,7 +216,12 @@
                         gender: this.gender,
                         dob: this.dob,
                         passport: this.passport,
-                        email: this.email
+                        email: this.email,
+                        membership_id: this.membership_id,
+                        membership_number: this.membership_number,
+                        city: this.city,
+                        address: this.address,
+                        mobile: this.mobile
                     }
 
                 },

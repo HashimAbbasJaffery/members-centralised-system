@@ -26,8 +26,9 @@
                 </select>
             </div>
         </div>
+        
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <label for="merital" style="margin-bottom: 5px; margin-top: 10px;">Membership Status</label>
                 <select class="form-select mb-3" v-model="membership_status" id="membership_status">
                     <option selected="">Membership Status</option>
@@ -36,7 +37,7 @@
                     <option value="cancelled">Cancelled</option>
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-6" v-show="false">
                 <label for="city_country" style="margin-bottom: 5px;">City Country</label>
                 <p class="text-danger" style="font-size: 10px; margin-bottom: 5px; margin-top: 10px;" v-text="errors['city_country']?.[0]"></p>
                 <input type="text" class="form-control" v-model="city_country" :class="{ 'border border-danger': errors['city_country']?.[0].length }" id="city_country" placeholder="City Country">
@@ -108,6 +109,7 @@
                         <input type="date" class="form-control" v-model="children[3][1]" id="fourth_child_dob" placeholder="Fifth Child DOB">
                     </div>
                 </div>
+               
                 <div class="row">
                     <div class="col-6">
                         <label for="fifth_child" style="margin-bottom: 5px; margin-top: 10px;">Fifth Child</label>
@@ -177,6 +179,7 @@
     </div>
     </div>
     </main>
+     
     @push("scripts")
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -190,17 +193,17 @@
                     date_of_applying: "{{ $introletter->date_of_applying }}",
                     marital_status: "{{ $introletter->martial_status }}",
                     membership_status: "{{ $introletter->membership_status }}",
-                    city_country: "{{ $introletter->city_country }}",
+                    city_country: "-",
                     spouses: [
-                                "{{ $introletter->member->spouses[0]->spouse_name }}", 
-                                "{{ $introletter->member->spouses[1]->spouse_name }}", 
-                                "{{ $introletter->member->spouses[2]->spouse_name }}", 
-                                "{{ $introletter->member->spouses[3]->spouse_name }}"
+                                [],
+                                [],
+                                [],
+                                []
                             ],
                     children: [
-                                ["{{ $introletter->member->children[0]->child_name }}", "{{ $introletter->member->children[0]->date_of_birth }}"],
-                                ["{{ $introletter->member->children[1]->child_name }}", "{{ $introletter->member->children[1]->date_of_birth }}"],
-                                ["{{ $introletter->member->children[2]->child_name }}", "{{ $introletter->member->children[2]->date_of_birth }}"],
+                                [],
+                                [],
+                                [],
                                 [],
                                 [],
                                 [],
@@ -240,6 +243,9 @@
                 }
             }
         }).mount("#app")
+        
     </script>
+    
+     
     @endpush
 </x-layout>

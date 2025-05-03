@@ -28,7 +28,11 @@ class MembersBasicDetailsController extends Controller
             "gender" => request()->gender,
             "dob" => request()->dob,
             "passport" => request()->passport,
-            "membership_id" => request()->membership_id  
+            "membership_id" => (int)request()->membership_id ,
+            "city" => request()->city,
+            "adress" => request()->adress,
+            "mobile" => request()->mobile,
+            "membership_number" => request()->membership_number
         ];
 
         $validator = Validator::make($data, [
@@ -37,6 +41,11 @@ class MembersBasicDetailsController extends Controller
             "gender" => [ "required" ],
             "dob" => [ "required" ],
             "passport" => [ "required" ],
+            "membership_id" => [ "required" ],
+            "city" => [ "required" ],
+            "adress" => [ "required" ],
+            "mobile" => [ "required" ],
+            "membership_number" => [ "required" ]
         ]);
 
         if ($validator->fails()) {
@@ -58,10 +67,11 @@ class MembersBasicDetailsController extends Controller
             "dob" => request()->dob,
             "passport" => request()->passport,
             "membership_id" => request()->membership_id,
+            "membership_number" => request()->membership_number ?? null,
             "cnic" => "",
-            "adress" => "",
-            "city" => "",
-            "mobile" => "",
+            "adress" => request()->address,
+            "city" => request()->city,
+            "mobile" => request()->mobile,
             "profession" => "",
             "position" => "",
             "organization" => "",

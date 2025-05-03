@@ -29,6 +29,12 @@
       <i class="align-middle" data-feather="rotate-ccw"></i> <span class="align-middle">Recovery</span>
     </a>
             </li>
+            <li @class(['active' => request()->routeIs("membership.index"), 'sidebar-item'])>
+                <a class="sidebar-link" href="{{ route('membership.index') }}">
+                    <i class="align-middle" data-feather="users"></i>
+                    <span class="align-middle">Memberships</span>
+                </a>
+            </li>            
         </ul>
     </div>
 </nav>

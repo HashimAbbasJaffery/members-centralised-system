@@ -69,7 +69,7 @@
 													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
 														<i class="fa-solid fa-highlighter"></i>
 													</button>
-													<button @click="highlight(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
+													<button @click="addToIntroletter(member.id)" style="font-size: 10px; margin-right: 10px;" class="btn btn-primary">
 														Add in Introletter
 													</button>
 													<button @click="addToRecovery(member.id)" style="font-size: 10px;" class="btn btn-primary">
@@ -157,6 +157,10 @@
 					addToRecovery(id) {
 						alert(id);
 						window.location = route("member.create.recovery", { member: id });
+					},
+
+					addToIntroletter(id) {
+						window.location = route("introletter.create", { member: id })
 					}
 				}
 			}).mount("#app");

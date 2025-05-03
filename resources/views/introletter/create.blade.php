@@ -213,10 +213,8 @@
                 async submit() {
                     try {
                         const response = await axios.post(route("api.introletter.store", this.getData()));
-                        console.log(response);
-                        return;
                         if(response.status === 200) {
-                            window.location = route("member.add.recovery");
+                            window.location = route("introletter.index");
                         }
                     } catch(e) {
                         console.log(e);

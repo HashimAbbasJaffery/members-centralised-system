@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\IntroletterController;
 use App\Http\Controllers\Api\MembersController;
+use App\Http\Controllers\Api\MembershipController;
 use App\Http\Controllers\Api\RecoveryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MembersBasicDetailsController;
@@ -19,6 +20,7 @@ Route::name("api.")->group(function() {
     Route::put("/member-details/{member}/update", [MembersBasicDetailsController::class, "edit"])->name("member-details.update");
     Route::post("/member-details/create", [MembersBasicDetailsController::class, "store"])->name("member-details.create");
     Route::resource("/introletter", IntroletterController::class);
+    Route::resource("/membership", MembershipController::class);
 });
 
 Route::put("/member/{member}/highlighter", [MembersController::class, "highlight"])->name("api.members.highlight");

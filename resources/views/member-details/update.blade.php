@@ -1,5 +1,5 @@
 <x-layout>
-	<main class="content" id="app">
+    <main class="content" id="app">
 		<div class="container-fluid p-0">
             <h5 class="h5 mb-3">Update Hashim Abbas in Recovery Members</h5>
         </div>
@@ -47,6 +47,23 @@
                     </select>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="city" style="margin-bottom: 5px; margin-top: 10px;">City/Country</label>
+                    <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['city']?.[0]"></p>
+                    <input type="text" class="form-control" :class="{ 'border border-danger': errors['city']?.[0].length }" v-model="city" id="city" placeholder="City/Country">
+                </div>
+                <div class="col-4">
+                    <label for="address" style="margin-bottom: 5px; margin-top: 10px;">Address</label>
+                    <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['adress']?.[0]"></p>
+                    <input type="text" class="form-control" :class="{ 'border border-danger': errors['adress']?.[0].length }" v-model="address" id="address" placeholder="Address">
+                </div>
+                <div class="col-4">
+                    <label for="mobile" style="margin-bottom: 5px; margin-top: 10px;">Mobile</label>
+                    <p class="text-danger" style="font-size: 10px; margin-bottom: 5px;" v-text="errors['mobile']?.[0]"></p>
+                    <input type="text" class="form-control" :class="{ 'border border-danger': errors['mobile']?.[0].length }" v-model="mobile" id="mobile" placeholder="Mobile">
+                </div>
+            </div>
             <button class="btn btn-primary" style="margin-top: 20px;" type="submit">Submit</button>
                 <a href="{{ route('api.member-details') }}" class="btn btn-dark" style="margin-top: 20px; margin-left: 10px;">Cancel</a>
             </div>
@@ -67,6 +84,9 @@
                     passport: "{{ $member->passport }}",
                     email: "{{ $member->email }}",
                     memberships: "{{ $member->membership_id }}",
+                    city: "{{ $member->city }}",
+                    address: "{{ $member->adress }}",
+                    mobile: "{{ $member->mobile }}",
                     errors: []
                 }
             },
@@ -79,7 +99,10 @@
                         dob: this.dob,
                         passport: this.passport,
                         email: this.email,
-                        membership_id: this.memberships
+                        membership_id: this.memberships,
+                        city: this.city,
+                        mobile: this.mobile,
+                        adress: this.address
                     }
                 },
                 async submit(e, id) {

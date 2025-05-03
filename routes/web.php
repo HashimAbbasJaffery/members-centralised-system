@@ -3,6 +3,7 @@
 use App\Http\Controllers\IntroletterController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MembersBasicDetailsController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\RecoveryController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,9 @@ Route::get("/recovery/{recovery}/update", [RecoveryController::class, "update"])
 Route::get("/introletter/{member}/create", [IntroletterController::class, "create"])->name("introletter.create");
 Route::get("/introletter/{introletter}/update", [IntroletterController::class, "update"])->name("member.introletter.update");
 Route::get("/introletter", [IntroletterController::class, "index"])->name("introletter.index");
+Route::get("/introletter/createManually", [IntroletterController::class, "createManually"])->name("member.create.manually");
 
+Route::resource("/membership", MembershipController::class);
+Route::get("/membership", [MembershipController::class, "index"])->name("membership.index");
 // Route::resource("/introletter", IntroletterController::class);
 

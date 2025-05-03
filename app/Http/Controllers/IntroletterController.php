@@ -20,4 +20,7 @@ class IntroletterController extends Controller
     public function update(Introletter $introletter) {
         return view("introletter.update", compact("introletter"));
     }
+    public function createManually() {
+        return view("introletter.create-manually");
+    }
 }

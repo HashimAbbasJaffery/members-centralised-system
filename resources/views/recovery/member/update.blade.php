@@ -121,7 +121,24 @@
               </select>
             </div>
           </div>
-      
+        <div class="row">
+            <div class="col-3">
+                <label for="city" style="margin-bottom: 5px; margin-top: 10px;">City</label>
+                <input type="text" class="form-control" v-model="city" id="city" placeholder="City/Country">
+            </div>    
+            <div class="col-3">
+                <label for="address" style="margin-bottom: 5px; margin-top: 10px;">Address</label>
+                <input type="text" class="form-control" v-model="adress" id="address" placeholder="Address">
+            </div>
+            <div class="col-3">
+                <label for="mobile" style="margin-bottom: 5px; margin-top: 10px;">Mobile</label>
+                <input type="text" class="form-control" v-model="mobile" id="mobile" placeholder="Mobile">
+            </div>
+            <div class="col-3">
+                <label for="membership_number" style="margin-bottom: 5px; margin-top: 10px;">Membership Number</label>
+                <input type="text" class="form-control" v-model="membership_number" id="membership_number" placeholder="Membership Number">
+            </div>
+        <div>
           <!-- Buttons -->
           <div class="mt-3">
             <button type="submit" :disabled="is_updating_member" class="btn btn-primary" v-text="is_updating_member ? 'Updating...' : 'Update'"></button>
@@ -141,7 +158,6 @@
                     level: "{{ $recovery->level }}",
                     alt_phone_number: "",
                     membership_type: "{{ $recovery->membership_type }}",
-                    membership_number: "{{ $recovery->membership_number }}",
                     installment_months: "{{ $recovery->installment_months }}",
                     file_number: "{{ $recovery->file_number }}",
                     form_fee: "{{ $recovery->form_fee }}",
@@ -159,7 +175,12 @@
                     passport: "{{ $member->passport }}",
                     email: "{{ $member->email }}",
                     membership: "{{ $member->membership_id }}",
-
+                    membership_number: "{{ $member->membership_number }}",
+                    city: "{{ $member->city }}",
+                    adress: "{{ $member->adress }}",
+                    mobile: "{{ $member->mobile }}",
+                    membership_number: "{{ $member->membership_number }}",
+                    
                     // Toast Notification
                     toast: VueToast.useToast(),
 
@@ -205,7 +226,11 @@
                         dob: this.dob,
                         passport: this.passport,
                         email: this.email,
-                        membership_id: this.membership
+                        membership_id: this.membership,
+                        membership_number: this.membership_number,
+                        city: this.city,
+                        adress: this.adress,
+                        mobile: this.mobile
                     }
                 },
                 async submit() {

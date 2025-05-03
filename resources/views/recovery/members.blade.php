@@ -50,8 +50,8 @@
                                         <td v-text="member.phone_1"></td>
                                         <td v-text="member.phone_2"></td>
                                         <td v-text="member.address"></td>
-                                        <td v-text="member.membership_type"></td>
-                                        <td v-text="member.membership_number"></td>
+                                        <td v-text="member.membership"></td>
+                                        <td v-text="member.membership_number ?? '901'"></td>
                                         <td v-text="member.installment_months"></td>
                                         <td v-text="member.file_number"></td>
                                         <td v-text="member.form_fee"></td>

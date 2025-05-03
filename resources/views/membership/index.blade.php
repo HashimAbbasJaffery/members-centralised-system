@@ -2,15 +2,15 @@
 <x-layout>
 	
 	<main class="content" id="app">
-		<div class="container-fluid p-0">
+        <div class="container-fluid p-0">
 
-			<h1 class="h3 mb-3">Introletter Member</h1>
+			<h1 class="h3 mb-3">Recovery Members</h1>
 
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h5 class="card-title mb-0">Introletter Member</h5>
+							<h5 class="card-title mb-0">Recovery Members</h5>
 						</div>
                         <div style="margin-top: 20px; margin-right: 20px;">
 							<input type="text" id="search" style="width: 24%; float: right; margin-top: 30px;" class="form-control" v-model="keyword" placeholder="Search">
@@ -24,31 +24,19 @@
 							</select>
 						</div>
 						<div>
-							<a href="{{ route('member.create.manually') }}" class="btn btn-primary" style="float: right; width: 10%; margin-right: 20px; margin-top: 10px; font-size: 13px;">Create</a>
+							<a href="{{ route('member.create.recovery.manually') }}" class="btn btn-primary" style="float: right; width: 10%; margin-right: 20px; margin-top: 10px; font-size: 13px;">Create</a>
 						</div>
 						<div class="card-body" style="overflow: scroll;">
 							<table class="table table-hover my-0" style="font-size: 10px;">
 								<thead>
 									<tr>
-										<th>S. No</th>
-										<th>File No</th>
-										<th>Membership Number</th>
-										<th>Member's name</th>
-										<th>cnic</th>
-										<th>Date of Birth</th>
-										<th>Membership Status</th>
-										<th>Actions</th>
+										<th>Membership Name</th>
+                                        <th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr v-for="(member, index) in members" :class="{ 'highlighted': member.highlighted == 'highlighted' }">
-                                        <td v-text="index+1"></td>
-                                        <td v-text="member.file_number"></td>
-                                        <td v-text="member.membership_number"></td>
-                                        <td v-text="member.member_name"></td>
-                                        <td v-text="member.cnic_passport"></td>
-                                        <td v-text="member.date_of_birth"></td>
-                                        <td v-text="member.membership_status ?? 'Regular'"></td>
+                                        <td v-text="member.membership_name"></td>
                                         <td>
 											<div style="display: flex;">
 												<button style="margin-right: 10px; font-size: 10px;" class="btn btn-danger" @click="deleteRecovery(member.id)" style="font-size: 10px;">
@@ -88,14 +76,14 @@
 					}
 				},
 				mounted() {
-					this.getRecord(route("api.introletter.index"));
+					this.getRecord(route("api.membership.index"));
 				},
 				watch: {
 					keyword(newValue) {
-                    	this.getRecord(route("api.introletter.index", { keyword: newValue, per_page: this.perpage }));
+                    	this.getRecord(route("api.membership.index", { keyword: newValue, per_page: this.perpage }));
 					},
 					perpage(newValue) {
-						this.getRecord(route("api.introletter.index", { per_page: newValue, keyword: this.keyword }));
+						this.getRecord(route("api.membership.index", { per_page: newValue, keyword: this.keyword }));
 					}
 				},
 				methods: {
@@ -141,14 +129,14 @@
                     async deleteRecovery(id) {
                         const isConfirm = confirm("This data will be deleted completely... are you sure?");
                         if(!isConfirm) return;
-                        const response = await axios.delete(route('api.introletter.destroy', { introletter: id }));
-                        
+                        const response = await axios.delete(route('api.recovery.destroy', { recovery: id }));
+
                         if(response.status === 200) {
                             this.members = this.members.filter(member => member.id != id);
                         }
                     },
 					updateRecovery(id) {
-						window.location = route("member.introletter.update", { introletter: id });
+						window.location = route("member.update.recovery", { recovery: id });
 					},
 					createManually() {
 						alert("Recovery will be created manually");
