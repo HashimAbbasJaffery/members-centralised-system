@@ -74,7 +74,7 @@ class IntroletterController extends Controller
                 "file_number" => request()->file_number,
                 "date_of_applying" => request()->date_of_applying,
                 "martial_status" => request()->marital_status,
-                "city_country" => request()->city_country,
+                "city_country" => request()?->city_country,
                 "membership_status" => request()->membership_status
             ]);
     

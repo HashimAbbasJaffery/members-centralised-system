@@ -21,6 +21,8 @@ Route::name("api.")->group(function() {
     Route::post("/member-details/create", [MembersBasicDetailsController::class, "store"])->name("member-details.create");
     Route::resource("/introletter", IntroletterController::class);
     Route::resource("/membership", MembershipController::class);
+
+    Route::put("/member-details/{member}/membership", [MembersController::class, "updateMembershipNumber"])->name("member.membership.update");
 });
 
 Route::put("/member/{member}/highlighter", [MembersController::class, "highlight"])->name("api.members.highlight");

@@ -18,7 +18,7 @@ class IntroletterResource extends JsonResource
             "id" => $this->id,
             "file_number" => $this->file_number,
             "date_of_applying" => $this->date_of_applying,
-            "membership_number" => 905,
+            "membership_number" => $this->member?->membership_number ?? "N/A",
             "member_name" => $this->member->name,
             "cnic_passport" => $this->member->passport,
             "date_of_birth" => $this->member->dob,

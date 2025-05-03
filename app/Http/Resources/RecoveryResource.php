@@ -22,11 +22,11 @@ class RecoveryResource extends JsonResource
             "phone_2" => $this->alt_phone_number,
             "address" => $this->member->adress,
             "membership_type" => $this->membership_type,
-            "membership_number" => $this->membership_number,
+            "membership_number" => $this->member?->membership_number ?? "N/A",
             "installment_months" => $this->installment_months,
             "file_number" => $this->file_number,
             "form_fee" => $this->form_fee,
-            "membership" => $this->member?->membership?->membership ?? ""
+            "membership" => $this->member?->membership?->membership ?? "",
         ];
     }
 }

@@ -25,7 +25,8 @@ class MemberResource extends JsonResource
                 "adress" => $this->adress,
                 "email" => $this->email,
                 "is_partial_paid" => $this->recovery()->exists(),
-                "membership" => $this->membership?->id
+                "membership" => $this->membership?->id,
+                "membership_number" => $this->membership_number
             ];
         }
 

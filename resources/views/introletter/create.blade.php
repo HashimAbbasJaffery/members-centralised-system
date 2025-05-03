@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <label for="merital" style="margin-bottom: 5px; margin-top: 10px;">Membership Status</label>
                 <select class="form-select mb-3" v-model="membership_status" id="membership_status">
                     <option selected="">Membership Status</option>
@@ -37,10 +37,21 @@
                     <option value="cancelled">Cancelled</option>
                 </select>
             </div>
-            <div class="col-6">
-                <label for="city_country" style="margin-bottom: 5px;">City Country</label>
-                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px; margin-top: 10px;" v-text="errors['city_country']?.[0]"></p>
-                <input type="text" class="form-control" v-model="city_country" :class="{ 'border border-danger': errors['city_country']?.[0].length }" id="city_country" placeholder="City Country">
+            <div class="col-4">
+                <label for="membership" style="margin-bottom: 5px;">Membership</label>
+                <p class="text-danger" style="font-size: 10px; margin-bottom: 5px; margin-top: 10px;" v-text="errors['membership']?.[0]"></p>
+                <select class="form-select mb-3" v-model="membership" id="membership_status">
+                    <option selected="">Membership Status</option>
+                    <option value="1">Permanent</option>
+                    <option value="2">Permanent+</option>
+                    <option value="3">Permanent SE</option>
+                    <option value="4">Founder</option>
+                    <option value="5">Corporate</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <label for="membership_number" style="margin-bottom: 5px;">Membership Number</label>
+                <input type="text" class="form-control" v-model="membership_number" style="margin-top: 10px;" placeholder="Membership Number" />
             </div>
         </div>
 
@@ -189,18 +200,21 @@
                     children: 0,
                     file_number: "",
                     date_of_applying: "",
-                    marital_status: "",
-                    membership_status: "",
+                    marital_status: "single",
+                    membership_status: "regular",
+                    membership_number: "",
+                    membership: "1",
                     city_country: "",
                     spouses: [],
                     children: [[], [], [], [], [], [], [], [], [], []],
-                    errors: []
+                    errors: [],
+                    member_id: parseInt(route().params.member)
                 }
             },
             methods: {
                 getData() {
                     return {
-                        member_id: parseInt(route().params.member),
+                        member_id: this.member_id,
                         file_number: this.file_number,
                         date_of_applying: this.date_of_applying,
                         marital_status: this.marital_status,
@@ -212,6 +226,11 @@
                 },
                 async submit() {
                     try {
+                        const membership_response = await axios.put(route("api.member.membership.update", { member: this.member_id, 
+                                                                                            membership_number: this.membership_number,
+                                                                                            membership_id: this.membership 
+                                                                                        }));
+                        if(membership_response.status !== 200) return; 
                         const response = await axios.post(route("api.introletter.store", this.getData()));
                         if(response.status === 200) {
                             window.location = route("introletter.index");

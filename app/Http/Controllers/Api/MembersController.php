@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
 use App\Models\Member;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Schema;
 class MembersController extends Controller
 {
     protected MemberResource $membersResource;
-    public function __construct() {
+    public function __construct(protected ApiResponse $apiResponse) {
 
     }
     public function index() {
@@ -36,5 +37,16 @@ class MembersController extends Controller
     public function highlight(Member $member) {
         $member->toggleHighlight();
         return [ "status" => 200 ];
+    }
+    public function updateMembershipNumber(Member $member) {
+        $membership_id = request()->membership_id;
+        $membership_number = request()->membership_number;
+
+        $member->update([
+            "membership_id" => $membership_id,
+            "membership_number" => $membership_number
+        ]);
+
+        return $this->apiResponse->success("Membership details has been updated!");
     }
 }
